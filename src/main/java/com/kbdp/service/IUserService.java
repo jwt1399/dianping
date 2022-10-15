@@ -1,7 +1,11 @@
 package com.kbdp.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kbdp.dto.LoginFormDTO;
+import com.kbdp.dto.Result;
 import com.kbdp.entity.User;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.kbdp.entity.User;
  */
 public interface IUserService extends IService<User> {
 
+    Result sendCode(String phone, HttpSession session);
+
+    Result login(LoginFormDTO loginForm, HttpSession session);
 }

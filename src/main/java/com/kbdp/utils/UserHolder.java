@@ -1,6 +1,7 @@
 package com.kbdp.utils;
 
 import com.kbdp.dto.UserDTO;
+import com.kbdp.entity.User;
 
 public class UserHolder {
     private static final ThreadLocal<UserDTO> tl = new ThreadLocal<>();
