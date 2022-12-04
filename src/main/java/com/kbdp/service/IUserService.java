@@ -5,6 +5,7 @@ import com.kbdp.dto.LoginFormDTO;
 import com.kbdp.dto.Result;
 import com.kbdp.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -12,12 +13,16 @@ import javax.servlet.http.HttpSession;
  *  服务类
  * </p>
  *
- * @author 虎哥
- * @since 2021-12-22
  */
 public interface IUserService extends IService<User> {
 
     Result sendCode(String phone, HttpSession session);
 
     Result login(LoginFormDTO loginForm, HttpSession session);
+
+    Result logout(HttpServletRequest httpServletRequest);
+
+    Result sign();
+
+    Result signCount();
 }

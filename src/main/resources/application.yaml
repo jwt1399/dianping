@@ -5,7 +5,7 @@ spring:
     name: kbdp
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/kbdp?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/kbdp?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
     username: root
     password: root
   redis:

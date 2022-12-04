@@ -1,6 +1,7 @@
 package com.kbdp.controller;
 
 
+import cn.hutool.core.bean.BeanUtil;
 import com.kbdp.dto.LoginFormDTO;
 import com.kbdp.dto.Result;
 import com.kbdp.dto.UserDTO;
@@ -10,16 +11,17 @@ import com.kbdp.service.IUserInfoService;
 import com.kbdp.service.IUserService;
 import com.kbdp.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
  * <p>
  * 前端控制器
  * </p>
- *
  */
 @Slf4j
 @RestController
@@ -52,13 +54,14 @@ public class UserController {
         return userService.login(loginForm, session);
     }
 
+
     /**
      * 登出功能
      */
     @PostMapping("/logout")
-    public Result logout() {
-        // TODO 实现登出功能
-        return Result.fail("功能未完成");
+    public Result logout(HttpServletRequest httpServletRequest) {
+        return userService.logout(httpServletRequest);
+        //return Result.fail("功能未完成");
     }
 
     @GetMapping("/me")
@@ -80,5 +83,35 @@ public class UserController {
         info.setUpdateTime(null);
         // 返回
         return Result.ok(info);
+    }
+
+    @GetMapping("/{id}")
+    public Result queryUserById(@PathVariable("id") Long userId) {
+        // 查询详情
+        User user = userService.getById(userId);
+        if (user == null) {
+            return Result.ok();
+        }
+        UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
+        // 返回
+        return Result.ok(userDTO);
+    }
+
+    /**
+     * 签到
+     * @return
+     */
+    @PostMapping("/sign")
+    public Result sign(){
+        return userService.sign();
+    }
+
+    /**
+     * 签到统计
+     * @return 连续签到的天数
+     */
+    @GetMapping("/sign/count")
+    public Result signCount(){
+        return userService.signCount();
     }
 }
